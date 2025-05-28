@@ -6,6 +6,8 @@ class RoundTextfield extends StatelessWidget {
   final String hitText;
   final String errorMessage;
   final bool isError;
+  final bool obscureText;
+  final bool isValid;
   final TextInputType? keyboardType;
   final int? minLine;
   final int? maxLine;
@@ -16,6 +18,8 @@ class RoundTextfield extends StatelessWidget {
     required this.hitText,
     this.errorMessage = "",
     this.isError = false,
+    this.obscureText = false,
+    this.isValid = false,
     this.keyboardType,
     this.minLine,
     this.maxLine,
@@ -51,8 +55,9 @@ class RoundTextfield extends StatelessWidget {
               TextField(
                 controller: controller,
                 keyboardType: keyboardType,
-                maxLines: maxLine,
-                minLines: minLine,
+                maxLines: obscureText ? 1 : maxLine,
+                minLines: obscureText ? 1 : minLine,
+                obscureText: obscureText,
                 decoration: InputDecoration(
                   focusedBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
@@ -62,7 +67,7 @@ class RoundTextfield extends StatelessWidget {
                   hintText: hitText,
                   suffixIcon: isError
                       ? Icon(Icons.close, color: TColor.primary)
-                      : Icon(Icons.done, color: TColor.secondary),
+                      : isValid ? Icon(Icons.done, color: TColor.secondary) : null,
                   hintStyle: TextStyle(color: TColor.placeholder),
                   labelStyle: TextStyle(
                     color: TColor.placeholder,

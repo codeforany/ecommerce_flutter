@@ -2,27 +2,20 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/common_widgets/round_textfield.dart';
+import 'package:ecommerce/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: Icon(Icons.arrow_back_ios, color: TColor.primaryText),
-        ),
-      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -31,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Login",
+                  "Sign Up",
                   style: TextStyle(
                     color: TColor.primaryText,
                     fontSize: 34,
@@ -40,6 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 SizedBox(height: context.width * 0.16),
+
+                RoundTextfield(
+                  hitText: "Name",
+                  isError: false,
+                  errorMessage: "Please enter name",
+                ),
 
                 RoundTextfield(
                   hitText: "Email",
@@ -53,9 +52,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(LoginScreen());
+                      },
                       child: Text(
-                        "Forgot your password?",
+                        "Already have an account?",
                         style: TextStyle(
                           color: TColor.primaryText,
                           fontSize: 14,
@@ -70,24 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 30),
 
-                RoundButton(title: "LOGIN", onPressed: () {}),
+                RoundButton(title: "SIGN UP", onPressed: () {}),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Don't have account? SIGN UP",
-                        style: TextStyle(
-                          color: TColor.primaryText,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                
 
                 SizedBox(height: context.width * 0.5),
 

@@ -1,5 +1,6 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/screen/login/login_screen.dart';
+import 'package:ecommerce/screen/login/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 //flutter create --org com.codeforany ecommerce
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           elevation: 0
         )
       ),
-      home: LoginScreen(),
+      home: SignupScreen(),
     );
   }
 }
