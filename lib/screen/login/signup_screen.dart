@@ -3,6 +3,7 @@ import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/common_widgets/round_textfield.dart';
 import 'package:ecommerce/screen/login/login_screen.dart';
+import 'package:ecommerce/screen/main_tab/main_tab_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -71,7 +72,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 SizedBox(height: 30),
 
-                RoundButton(title: "SIGN UP", onPressed: () {}),
+                RoundButton(title: "SIGN UP", onPressed: () {
+
+                    context.push( MainTabScreen() );
+
+                }),
 
                 
 
