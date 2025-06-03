@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class RoundButton extends StatelessWidget {
   final String title;
+  final double? width;
   final VoidCallback onPressed;
 
-  const RoundButton({super.key, required this.title, required this.onPressed});
+  const RoundButton({super.key, required this.title, this.width, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class RoundButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         height: 48,
+        width: width,
         decoration: BoxDecoration(
           color: TColor.primary,
           borderRadius: BorderRadius.circular(30),
