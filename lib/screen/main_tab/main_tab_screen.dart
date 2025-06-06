@@ -1,5 +1,6 @@
 import 'package:ecommerce/common_widgets/tab_button.dart';
 import 'package:ecommerce/screen/home/home1_screen.dart';
+import 'package:ecommerce/screen/home/home2_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainTabScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _MainTabScreenState extends State<MainTabScreen>
       body: TabBarView(
         controller: controller,
         children: [
-          Home1Screen(),
+          Home2Screen(),
           Container(),
           Container(),
           Container(),
