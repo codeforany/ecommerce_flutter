@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
         appBarTheme: AppBarTheme(
           color: TColor.whiteText,
-          elevation: 0
+          elevation: 1
         )
       ),
       home: SignupScreen(),
