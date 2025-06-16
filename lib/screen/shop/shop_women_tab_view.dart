@@ -1,5 +1,7 @@
+import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/screen/shop/cat_center_text_row.dart';
 import 'package:ecommerce/screen/shop/cat_image_text_row.dart';
+import 'package:ecommerce/screen/shop/sub_cat_screen.dart';
 import 'package:flutter/material.dart';
 
 class ShopWomenTabView extends StatefulWidget {
@@ -51,8 +53,12 @@ class _ShopWomenTabViewState extends State<ShopWomenTabView> {
         var obj = listArr[index];
         var isOffer = (obj["is_offer"] as bool? ?? false);
         return isOffer
-            ? CatCenterTextRow(obj: obj, onPressed: () {})
-            : CatImageTextRow(obj: obj, onPressed: () {});
+            ? CatCenterTextRow(obj: obj, onPressed: () {
+              context.push( SubCatScreen()  );
+            })
+            : CatImageTextRow(obj: obj, onPressed: () {
+              context.push(SubCatScreen());
+            });
       },
       separatorBuilder: (context, index) => SizedBox(height: 20),
       itemCount: listArr.length,
