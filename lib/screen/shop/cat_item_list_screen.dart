@@ -1,5 +1,6 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
+import 'package:ecommerce/common_widgets/item_cell.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,6 +13,8 @@ class CatItemListScreen extends StatefulWidget {
 }
 
 class _CatItemListScreenState extends State<CatItemListScreen> {
+  bool isGrid = false;
+
   List tagListArr = [
     {"name": "T-shirts"},
     {"name": "Crop tops"},
@@ -65,6 +68,16 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
       'final_price': 11.0,
     },
   ];
+
+  List sortArr = [
+    {"name": "Popular"},
+    {"name": "Newest"},
+    {"name": "Customer review"},
+    {"name": "Price: lowest to highest"},
+    {"name": "Price: highest to lowest"},
+  ];
+
+  int selectSort = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +189,93 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                       ),
 
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                  
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25),
+                                  ),
+                                ),
+
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 20,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Sort By",
+                                            style: TextStyle(
+                                              color: TColor.primaryText,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        var obj = sortArr[index];
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectSort = index;
+                                            });
+                                            context.pop();
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: selectSort == index
+                                                  ? TColor.primary
+                                                  : Colors.transparent,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  obj["name"].toString(),
+                                                  style: TextStyle(
+                                                    color: selectSort == index
+                                                        ? TColor.whiteText
+                                                        : TColor.primaryText,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        selectSort == index
+                                                        ? FontWeight.w600
+                                                        : FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: sortArr.length,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -198,11 +297,18 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                       ),
 
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            isGrid = !isGrid;
+                          });
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.grid_on, color: TColor.primaryText),
+                            Icon(
+                              isGrid ? Icons.list : Icons.grid_on,
+                              color: TColor.primaryText,
+                            ),
                           ],
                         ),
                       ),
@@ -216,177 +322,203 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
           SizedBox(height: 15),
 
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              itemBuilder: (context, index) {
-                var obj = listArr[index];
+            child: isGrid
+                ? GridView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 15,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1 / 1.6,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                    ),
+                    itemBuilder: (context, index) {
+                      var obj = listArr[index];
 
-                return InkWell(
-                  onTap: () {},
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Container(
-                        height: 104,
-                        margin: const EdgeInsets.only(bottom: 15),
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 1,
-                              offset: Offset(0, 1),
-                            ),
-                          ],
-                        ),
-                        child: Row(
+                      return ItemCell(obj: obj);
+                    },
+                    itemCount: listArr.length,
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 8,
+                    ),
+                    itemBuilder: (context, index) {
+                      var obj = listArr[index];
+
+                      return InkWell(
+                        onTap: () {},
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadiusGeometry.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                              ),
-                              child: Image.asset(
-                                obj["image"].toString(),
-                                width: 104,
-                                height: 104,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 8,
+                              height: 104,
+                              margin: const EdgeInsets.only(bottom: 15),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 1,
+                                    offset: Offset(0, 1),
+                                  ),
+                                ],
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    obj["name"].toString(),
-                                    style: TextStyle(
-                                      color: TColor.primaryText,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                                  ClipRRect(
+                                    borderRadius: BorderRadiusGeometry.only(
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
+                                    child: Image.asset(
+                                      obj["image"].toString(),
+                                      width: 104,
+                                      height: 104,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
 
-                                  SizedBox(height: 8),
-
-                                  Text(
-                                    obj["detail"].toString(),
-                                    style: TextStyle(
-                                      color: TColor.placeholder,
-                                      fontSize: 11,
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                      horizontal: 8,
                                     ),
-                                  ),
-
-                                  SizedBox(height: 8),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      IgnorePointer(
-                                        ignoring: true,
-                                        child: RatingBar.builder(
-                                          initialRating:
-                                              double.tryParse(
-                                                obj["rate"].toString(),
-                                              ) ??
-                                              0.0,
-                                          minRating: 0,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                          itemSize: 17,
-                                          itemPadding: EdgeInsets.zero,
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          obj["name"].toString(),
+                                          style: TextStyle(
+                                            color: TColor.primaryText,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
                                         ),
-                                      ),
 
-                                      Text(
-                                        "(${obj["review"].toString()})",
-                                        style: TextStyle(
-                                          color: TColor.placeholder,
-                                          fontSize: 11,
+                                        SizedBox(height: 8),
+
+                                        Text(
+                                          obj["detail"].toString(),
+                                          style: TextStyle(
+                                            color: TColor.placeholder,
+                                            fontSize: 11,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
 
-                                  SizedBox(height: 8),
+                                        SizedBox(height: 8),
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${obj["price"].toString()}\$",
-                                        style: TextStyle(
-                                          color: TColor.primaryText,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            IgnorePointer(
+                                              ignoring: true,
+                                              child: RatingBar.builder(
+                                                initialRating:
+                                                    double.tryParse(
+                                                      obj["rate"].toString(),
+                                                    ) ??
+                                                    0.0,
+                                                minRating: 0,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                itemCount: 5,
+                                                itemSize: 17,
+                                                itemPadding: EdgeInsets.zero,
+                                                itemBuilder: (context, _) =>
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                    ),
+                                                onRatingUpdate: (rating) {
+                                                  print(rating);
+                                                },
+                                              ),
+                                            ),
+
+                                            Text(
+                                              "(${obj["review"].toString()})",
+                                              style: TextStyle(
+                                                color: TColor.placeholder,
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
 
-                                      // SizedBox(width: 4),
+                                        SizedBox(height: 8),
 
-                                      // Text(
-                                      //   "${obj["final_price"].toString()}\$",
-                                      //   style: TextStyle(
-                                      //     color: TColor.primary,
-                                      //     fontSize: 14,
-                                      //     fontWeight: FontWeight.w500,
-                                      //     decoration:
-                                      //         TextDecoration.lineThrough,
-                                      //   ),
-                                      // ),
-                                    ],
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${obj["price"].toString()}\$",
+                                              style: TextStyle(
+                                                color: TColor.primaryText,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+
+                                            // SizedBox(width: 4),
+
+                                            // Text(
+                                            //   "${obj["final_price"].toString()}\$",
+                                            //   style: TextStyle(
+                                            //     color: TColor.primary,
+                                            //     fontSize: 14,
+                                            //     fontWeight: FontWeight.w500,
+                                            //     decoration:
+                                            //         TextDecoration.lineThrough,
+                                            //   ),
+                                            // ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
+
+                            InkWell(
+                              child: Container(
+                                width: 40,
+                                height: 40,
+
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 2,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.favorite_border,
+                                  color: TColor.placeholder,
+                                  size: 17,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-
-                      InkWell(
-                        child: Container(
-                          width: 40,
-                          height: 40,
-
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 2,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.favorite_border,
-                            color: TColor.placeholder,
-                            size: 17,
-                          ),
-                        ),
-                      ),
-                    ],
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(height: 8),
+                    itemCount: listArr.length,
                   ),
-                );
-              },
-              separatorBuilder: (context, index) => SizedBox(height: 8),
-              itemCount: listArr.length,
-            ),
           ),
         ],
       ),
