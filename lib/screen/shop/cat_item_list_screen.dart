@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/item_cell.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/shop/filter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -170,7 +171,11 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+
+                            context.push( FilterScreen() );
+
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
