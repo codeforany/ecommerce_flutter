@@ -1,5 +1,7 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
+import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/shop/multiple_select_screen.dart';
 import 'package:flutter/material.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -23,6 +25,9 @@ class _FilterScreenState extends State<FilterScreen> {
   List sizeArr = ["XS", "S", "M", "L", "XL"];
   List selectSize = [];
 
+  List categoryArr = ["All", "Women", "Men", "Boys", "Girls"];
+  List selectCategory = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +45,47 @@ class _FilterScreenState extends State<FilterScreen> {
             color: TColor.primaryText,
             fontSize: 18,
             fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 2,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: RoundButton(
+                  title: "Discard",
+                  height: 36,
+                  type: RoundButtonType.line,
+                  onPressed: () {
+                    context.pop();
+                  },
+                ),
+              ),
+
+              SizedBox(width: 20,),
+
+              Expanded(
+                child: RoundButton(
+                  title: "Apply",
+                    height: 36,
+                  onPressed: () {
+                    context.pop();
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -232,8 +278,12 @@ class _FilterScreenState extends State<FilterScreen> {
                             ? TColor.primary
                             : Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:  selectSize.contains(index)
-                            ? TColor.primary : TColor.primaryText, width: 1)
+                        border: Border.all(
+                          color: selectSize.contains(index)
+                              ? TColor.primary
+                              : TColor.primaryText,
+                          width: 1,
+                        ),
                       ),
                       child: Text(
                         obj.toString(),
@@ -250,6 +300,126 @@ class _FilterScreenState extends State<FilterScreen> {
                 },
                 separatorBuilder: (context, index) => SizedBox(width: 15),
                 itemCount: sizeArr.length,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Text(
+                "Category",
+                style: TextStyle(
+                  color: TColor.primaryText,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 1,
+                    offset: Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: (context.width / 3) / 50,
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  var obj = categoryArr[index];
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        if (selectCategory.contains(index)) {
+                          selectCategory.remove(index);
+                        } else {
+                          selectCategory.add(index);
+                        }
+                      });
+                    },
+                    child: Container(
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: selectCategory.contains(index)
+                            ? TColor.primary
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: selectCategory.contains(index)
+                              ? TColor.primary
+                              : TColor.primaryText,
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        obj.toString(),
+                        style: TextStyle(
+                          color: selectCategory.contains(index)
+                              ? TColor.whiteText
+                              : TColor.primaryText,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+
+                itemCount: categoryArr.length,
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: InkWell(
+                onTap: (){
+                  context.push(MultipleSelectScreen());
+                },
+                child: Row(
+                  // mainAxisAlignment: ,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Brand",
+                            style: TextStyle(
+                              color: TColor.primaryText,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                
+                          Text(
+                            "adidas original, jack & jones",
+                            style: TextStyle(
+                              color: TColor.placeholder,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                
+                    Icon(Icons.navigate_next, color: TColor.primaryText),
+                  ],
+                ),
               ),
             ),
           ],
