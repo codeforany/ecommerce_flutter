@@ -3,6 +3,7 @@ import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/item_cell.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/screen/shop/filter_screen.dart';
+import 'package:ecommerce/screen/shop/select_size_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -172,9 +173,7 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-
-                            context.push( FilterScreen() );
-
+                          context.push(FilterScreen());
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -197,7 +196,6 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                         onTap: () {
                           showModalBottomSheet(
                             context: context,
-                  
                             backgroundColor: Colors.transparent,
                             builder: (context) {
                               return Container(
@@ -247,7 +245,9 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                                           },
                                           child: Container(
                                             height: 50,
-                                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                            ),
                                             decoration: BoxDecoration(
                                               color: selectSort == index
                                                   ? TColor.primary
@@ -342,7 +342,12 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                     itemBuilder: (context, index) {
                       var obj = listArr[index];
 
-                      return ItemCell(obj: obj);
+                      return ItemCell(
+                        obj: obj,
+                        onPressed: () {
+                          openSizeSelect();
+                        },
+                      );
                     },
                     itemCount: listArr.length,
                   )
@@ -355,7 +360,9 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                       var obj = listArr[index];
 
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          openSizeSelect();
+                        },
                         child: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
@@ -527,6 +534,17 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  //TODO: Action
+  void openSizeSelect() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return SelectSizeScreen();
+      },
     );
   }
 }
