@@ -1,6 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/home/item_row.dart';
+import 'package:ecommerce/screen/shop/select_size_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -12,6 +15,42 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  List listArr = [
+    {
+      'rate': 5.0,
+      'review': 10,
+      'offer': '-15%',
+      'is_offer': true,
+      'name': 'Evening Dress',
+      'detail': 'Dorothy Perkins',
+      'image': 'assets/img/temp/1.png',
+      'price': 15.0,
+      'final_price': 12.0,
+    },
+    {
+      'rate': 5.0,
+      'review': 10,
+      'offer': '-20%',
+      'is_offer': true,
+      'name': 'Sport Dress',
+      'detail': 'Sitlly',
+      'image': 'assets/img/temp/2.png',
+      'price': 22.0,
+      'final_price': 19.0,
+    },
+    {
+      'rate': 5.0,
+      'review': 10,
+      'offer': '-10%',
+      'is_offer': true,
+      'name': 'Sport Dress',
+      'detail': 'Dorothy Perkins',
+      'image': 'assets/img/temp/3.png',
+      'price': 14.0,
+      'final_price': 11.0,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,15 +101,50 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 200),
+            SizedBox(
+              height: 300,
+              child: CarouselSlider.builder(
+                itemCount: 3,
+                options: CarouselOptions(
+                  height: 300,
+                  aspectRatio: 9 / 16,
+                  viewportFraction: 0.7,
+                  initialPage: 0,
+                  enableInfiniteScroll: false,
+                  reverse: false,
+                  autoPlay: false,
+                  // autoPlayInterval: Duration(seconds: 3),
+                  // autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  enlargeFactor: 0.07,
+                  onPageChanged: (index, option) {},
+                  scrollDirection: Axis.horizontal,
+                ),
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) =>
+                        Container(
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Image.asset(
+                            "assets/img/temp/1.png",
+                            width: double.maxFinite,
+                            height: double.maxFinite,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+              ),
+            ),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Row(
                 children: [
                   Expanded(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        openSizeSelect();
+                      },
                       child: Container(
                         height: 44,
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -172,7 +246,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -321,9 +395,66 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
 
             Divider(color: Colors.black12, height: 0.5),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "You can also like this",
+                      style: TextStyle(
+                        color: TColor.primaryText,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "12 items",
+                      style: TextStyle(
+                        color: TColor.primaryText,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 300,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                scrollDirection: Axis.horizontal,
+
+                itemBuilder: (context, index) {
+                  var obj = listArr[index];
+                  return ItemRow(obj: obj);
+                },
+                separatorBuilder: (context, index) => SizedBox(width: 20),
+                itemCount: listArr.length,
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+    //TODO: Action
+  void openSizeSelect() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return SelectSizeScreen();
+      },
     );
   }
 }
