@@ -3,6 +3,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/screen/home/item_row.dart';
+import 'package:ecommerce/screen/shop/rating_reviews_screen.dart';
 import 'package:ecommerce/screen/shop/select_size_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -274,21 +275,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            IgnorePointer(
-                              ignoring: true,
-                              child: RatingBar.builder(
-                                initialRating: double.tryParse("5.0") ?? 0.0,
-                                minRating: 0,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemSize: 17,
-                                itemPadding: EdgeInsets.zero,
-                                itemBuilder: (context, _) =>
-                                    Icon(Icons.star, color: Colors.amber),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                            InkWell(
+                              onTap: () {
+                                context.push(RatingReviewsScreen());
+                              },
+                              child: IgnorePointer(
+                                ignoring: true,
+                                child: RatingBar.builder(
+                                  initialRating: double.tryParse("5.0") ?? 0.0,
+                                  minRating: 0,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 17,
+                                  itemPadding: EdgeInsets.zero,
+                                  itemBuilder: (context, _) =>
+                                      Icon(Icons.star, color: Colors.amber),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
                               ),
                             ),
 
