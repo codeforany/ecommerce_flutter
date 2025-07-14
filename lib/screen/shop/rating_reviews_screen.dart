@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/rating_bar_row.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/shop/create_review_screen.dart';
 import 'package:ecommerce/screen/shop/user_review_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -51,7 +52,7 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                   title: "Write a review",
                   height: 36,
                   onPressed: () {
-                    context.pop();
+                    openCreateReview();
                   },
                 ),
               ),
@@ -198,6 +199,18 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void openCreateReview() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      // scrollControlDisabledMaxHeightRatio: 0.8,
+      isScrollControlled: true,
+      builder: (context) {
+        return CreateReviewScreen();
+      },
     );
   }
 }
