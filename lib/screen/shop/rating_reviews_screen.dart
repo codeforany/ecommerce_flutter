@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/rating_bar_row.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/shop/user_review_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -13,7 +14,6 @@ class RatingReviewsScreen extends StatefulWidget {
 }
 
 class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
-
   var isShowPhoto = false;
 
   @override
@@ -74,7 +74,6 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                 ),
               ),
 
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 35),
                 child: Row(
@@ -91,7 +90,7 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                
+
                         Text(
                           "23 ratings",
                           style: TextStyle(
@@ -101,9 +100,9 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                         ),
                       ],
                     ),
-                
+
                     SizedBox(width: 15),
-                
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +139,6 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                 ),
               ),
 
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -163,7 +161,9 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                         isShowPhoto ? Icons.check_box : Icons.check_box_outline_blank,
+                          isShowPhoto
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
                           color: TColor.placeholder,
                         ),
 
@@ -180,6 +180,19 @@ class _RatingReviewsScreenState extends State<RatingReviewsScreen> {
                     ),
                   ),
                 ],
+              ),
+
+              ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(vertical: 20),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return UserReviewRow(obj: {}, onPressed: (){
+
+                  });
+                },
+                separatorBuilder: (context, index) => SizedBox(height: 8),
+                itemCount: 10,
               ),
             ],
           ),
