@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
+import 'package:ecommerce/common_widgets/image_picker_view.dart';
+import 'package:ecommerce/common_widgets/popup_layout.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -13,6 +17,7 @@ class CreateReviewScreen extends StatefulWidget {
 
 class _CreateReviewScreenState extends State<CreateReviewScreen> {
   TextEditingController txtMessage = TextEditingController();
+  List imageArr = [];
 
   @override
   Widget build(BuildContext context) {
@@ -102,45 +107,89 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                 crossAxisSpacing: 8,
                 childAspectRatio: 1,
               ),
-              itemCount: 1,
+              itemCount: imageArr.length + 1,
               itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: TColor.bg,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 2),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
+                var isAdd = imageArr.length == index;
+                return isAdd
+                    ? InkWell(
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            PopupLayout(
+                              child: ImagePickerView(
+                                didSelect: (imagePath) {
+                                  imageArr.add(File(imagePath));
+                                  if (mounted) {
+                                    setState(() {});
+                                  }
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: TColor.bg,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(color: Colors.black12, blurRadius: 2),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: TColor.primary,
+                                  borderRadius: BorderRadius.circular(25),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+
+                              Text(
+                                "Add your photos",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: TColor.primaryText,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
-                          color: TColor.primary,
-                          borderRadius: BorderRadius.circular(25),
+                          color: TColor.bg,
+                          borderRadius: BorderRadius.circular(5),
                           boxShadow: [
                             BoxShadow(color: Colors.black12, blurRadius: 2),
                           ],
                         ),
-                        child: Icon(Icons.camera_alt, color: Colors.white),
-                      ),
-
-                      Text(
-                        "Add your photos",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: TColor.primaryText,
-                          fontSize: 11,
+                        child: Image.file(
+                          imageArr[index],
+                          width: double.maxFinite,
+                          height: double.maxFinite,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                    ],
-                  ),
-                );
+                      );
               },
             ),
 
