@@ -1,4 +1,5 @@
 import 'package:ecommerce/common_widgets/tab_button.dart';
+import 'package:ecommerce/screen/bag/bag_tab_screen.dart';
 import 'package:ecommerce/screen/home/home1_screen.dart';
 import 'package:ecommerce/screen/home/home2_screen.dart';
 import 'package:ecommerce/screen/home/home3_screen.dart';
@@ -37,7 +38,7 @@ class _MainTabScreenState extends State<MainTabScreen>
         children: [
           Home3Screen(),
           ShopTabScreen(),
-          Container(),
+          BagTabScreen(),
           Container(),
           Container(),
         ],
