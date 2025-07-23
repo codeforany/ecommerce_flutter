@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/screen/bag/bag_row.dart';
+import 'package:ecommerce/screen/bag/promo_code_screen.dart';
 import 'package:flutter/material.dart';
 
 class BagTabScreen extends StatefulWidget {
@@ -11,7 +12,6 @@ class BagTabScreen extends StatefulWidget {
 }
 
 class _BagTabScreenState extends State<BagTabScreen> {
-
   List listArr = [
     {
       'rate': 5.0,
@@ -84,9 +84,7 @@ class _BagTabScreenState extends State<BagTabScreen> {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               itemBuilder: (context, index) {
-                return BagRow(obj: listArr[index] , onPressed: (){
-
-                });
+                return BagRow(obj: listArr[index], onPressed: () {});
               },
               separatorBuilder: (context, index) => SizedBox(height: 15),
               itemCount: listArr.length,
@@ -101,37 +99,41 @@ class _BagTabScreenState extends State<BagTabScreen> {
                 Stack(
                   alignment: Alignment.centerRight,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      margin: const EdgeInsets.only(right: 22),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12.withValues(alpha: 0.05),
-                            blurRadius: 1,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          focusedBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.zero,
+                     Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        margin: const EdgeInsets.only(right: 22),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12.withValues(alpha: 0.05),
+                              blurRadius: 1,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          
+                            hintText: "Enter you promo code",
 
-                          hintText: "Enter you promo code",
-
-                          hintStyle: TextStyle(color: TColor.placeholder),
-                          labelStyle: TextStyle(
-                            color: TColor.placeholder,
-                            fontSize: 11,
+                            hintStyle: TextStyle(color: TColor.placeholder),
+                            labelStyle: TextStyle(
+                              color: TColor.placeholder,
+                              fontSize: 11,
+                            ),
                           ),
+                          onTap: () {
+                            openPromoSelect();
+                          },
                         ),
                       ),
-                    ),
+                 
 
                     InkWell(
                       onTap: () {},
@@ -185,6 +187,18 @@ class _BagTabScreenState extends State<BagTabScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  //TODO: Action
+  void openPromoSelect() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return PromoCodeScreen();
+      },
     );
   }
 }
