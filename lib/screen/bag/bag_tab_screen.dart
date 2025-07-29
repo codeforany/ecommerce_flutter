@@ -1,6 +1,8 @@
 import 'package:ecommerce/common/color_extension.dart';
+import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/screen/bag/bag_row.dart';
+import 'package:ecommerce/screen/bag/checkout_screen.dart';
 import 'package:ecommerce/screen/bag/promo_code_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -181,7 +183,9 @@ class _BagTabScreenState extends State<BagTabScreen> {
                     ],
                   ),
                 ),
-                RoundButton(title: "CHECK OUT", onPressed: () {}),
+                RoundButton(title: "CHECK OUT", onPressed: () {
+                  context.push(  CheckoutScreen() );
+                }),
               ],
             ),
           ),
