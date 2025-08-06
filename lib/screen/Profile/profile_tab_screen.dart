@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/screen/Profile/my_orders_screen.dart';
 import 'package:ecommerce/screen/Profile/profile_row.dart';
+import 'package:ecommerce/screen/Profile/settings_screen.dart';
 import 'package:ecommerce/screen/bag/shipping_address_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -135,7 +136,7 @@ class _ProfileTabScreenState extends State<ProfileTabScreen> {
             title: "Settings",
             subtitle: "Notification, Password",
             onPressed: () {
-              context.push(ShippingAddressScreen());
+              context.push(SettingsScreen());
             },
           ),
         ],
