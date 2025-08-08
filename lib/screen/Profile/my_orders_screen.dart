@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_select_button.dart';
 import 'package:ecommerce/screen/Profile/my_order_row.dart';
+import 'package:ecommerce/screen/Profile/order_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyOrdersScreen extends StatefulWidget {
@@ -95,7 +96,12 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               itemBuilder: (context, index) {
-                return MyOrderRow();
+                return MyOrderRow(
+                  obj: {},
+                  onPressed: () {
+                    context.push( OrderDetailsScreen()  );
+                  },
+                );
               },
               separatorBuilder: (context, index) => SizedBox(height: 20),
               itemCount: 5,
