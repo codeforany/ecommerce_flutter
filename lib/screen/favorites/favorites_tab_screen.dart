@@ -1,20 +1,22 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/item_cell.dart';
+import 'package:ecommerce/screen/favorites/favorite_cell.dart';
+import 'package:ecommerce/screen/favorites/favorite_row.dart';
 import 'package:ecommerce/screen/shop/filter_screen.dart';
 import 'package:ecommerce/screen/shop/product_detail_screen.dart';
 import 'package:ecommerce/screen/shop/select_size_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class CatItemListScreen extends StatefulWidget {
-  const CatItemListScreen({super.key});
+class FavoritesTabScreen extends StatefulWidget {
+  const FavoritesTabScreen({super.key});
 
   @override
-  State<CatItemListScreen> createState() => _CatItemListScreenState();
+  State<FavoritesTabScreen> createState() => _FavoritesTabScreenState();
 }
 
-class _CatItemListScreenState extends State<CatItemListScreen> {
+class _FavoritesTabScreenState extends State<FavoritesTabScreen> {
   bool isGrid = false;
 
   List tagListArr = [
@@ -86,12 +88,7 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: Icon(Icons.arrow_back_ios, color: TColor.primaryText),
-        ),
+        leading: Container(),
 
         actions: [
           IconButton(
@@ -113,7 +110,7 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                   offset: Offset(0, 2),
                 ),
               ],
-            ), 
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -121,7 +118,7 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(
-                    "Women's tops",
+                    "Favorites",
                     style: TextStyle(
                       color: TColor.primaryText,
                       fontSize: 34,
@@ -324,7 +321,6 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
             ),
           ),
 
-          SizedBox(height: 15),
 
           Expanded(
             child: isGrid
@@ -335,14 +331,14 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.6,
+                      childAspectRatio: 1 / 1.68,
                       mainAxisSpacing: 15,
                       crossAxisSpacing: 15,
                     ),
                     itemBuilder: (context, index) {
                       var obj = listArr[index];
 
-                      return ItemCell(
+                      return FavoriteCell(
                         obj: obj,
                         onPressed: () {
                           openProductDetail();
@@ -359,174 +355,9 @@ class _CatItemListScreenState extends State<CatItemListScreen> {
                     itemBuilder: (context, index) {
                       var obj = listArr[index];
 
-                      return InkWell(
-                        onTap: () {
-                          openProductDetail();
-                        },
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            Container(
-                              height: 104,
-                              margin: const EdgeInsets.only(bottom: 15),
-                              alignment: Alignment.centerLeft,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 1,
-                                    offset: Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadiusGeometry.only(
-                                      topLeft: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10),
-                                    ),
-                                    child: Image.asset(
-                                      obj["image"].toString(),
-                                      width: 104,
-                                      height: 104,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                      horizontal: 8,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          obj["name"].toString(),
-                                          style: TextStyle(
-                                            color: TColor.primaryText,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-
-                                        SizedBox(height: 8),
-
-                                        Text(
-                                          obj["detail"].toString(),
-                                          style: TextStyle(
-                                            color: TColor.placeholder,
-                                            fontSize: 11,
-                                          ),
-                                        ),
-
-                                        SizedBox(height: 8),
-
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            IgnorePointer(
-                                              ignoring: true,
-                                              child: RatingBar.builder(
-                                                initialRating:
-                                                    double.tryParse(
-                                                      obj["rate"].toString(),
-                                                    ) ??
-                                                    0.0,
-                                                minRating: 0,
-                                                direction: Axis.horizontal,
-                                                allowHalfRating: true,
-                                                itemCount: 5,
-                                                itemSize: 17,
-                                                itemPadding: EdgeInsets.zero,
-                                                itemBuilder: (context, _) =>
-                                                    Icon(
-                                                      Icons.star,
-                                                      color: Colors.amber,
-                                                    ),
-                                                onRatingUpdate: (rating) {
-                                                  print(rating);
-                                                },
-                                              ),
-                                            ),
-
-                                            Text(
-                                              "(${obj["review"].toString()})",
-                                              style: TextStyle(
-                                                color: TColor.placeholder,
-                                                fontSize: 11,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        SizedBox(height: 8),
-
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${obj["price"].toString()}\$",
-                                              style: TextStyle(
-                                                color: TColor.primaryText,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-
-                                            // SizedBox(width: 4),
-
-                                            // Text(
-                                            //   "${obj["final_price"].toString()}\$",
-                                            //   style: TextStyle(
-                                            //     color: TColor.primary,
-                                            //     fontSize: 14,
-                                            //     fontWeight: FontWeight.w500,
-                                            //     decoration:
-                                            //         TextDecoration.lineThrough,
-                                            //   ),
-                                            // ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            InkWell(
-                              child: Container(
-                                width: 40,
-                                height: 40,
-
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 2,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: TColor.placeholder,
-                                  size: 17,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return FavoriteRow(obj: obj, onPressed: (){
+                        context.push(ProductDetailScreen());
+                      });
                     },
                     separatorBuilder: (context, index) => SizedBox(height: 8),
                     itemCount: listArr.length,
