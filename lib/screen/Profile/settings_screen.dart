@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_textfield.dart';
+import 'package:ecommerce/screen/Profile/change_password_screen.dart';
 import 'package:ecommerce/screen/Profile/setting_switch_row.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +83,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
 
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(ChangePasswordScreen());
+                    },
                     child: Text(
                       "Change",
                       style: TextStyle(

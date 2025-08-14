@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/common_widgets/round_textfield.dart';
+import 'package:ecommerce/screen/login/forgot_password_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: TColor.bg,
         leading: IconButton(
           onPressed: () {
             context.pop();
@@ -53,7 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(ForgotPasswordScreen());
+                      },
                       child: Text(
                         "Forgot your password?",
                         style: TextStyle(
