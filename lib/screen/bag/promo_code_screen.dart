@@ -14,7 +14,7 @@ class _PromoCodeScreenState extends State<PromoCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: context.heigth * 0.6 ),
+      constraints: BoxConstraints(maxHeight: context.height * 0.6 ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(

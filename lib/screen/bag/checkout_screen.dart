@@ -2,6 +2,7 @@ import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
 import 'package:ecommerce/screen/bag/shipping_address_screen.dart';
+import 'package:ecommerce/screen/shop/success_screen_1.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -306,7 +307,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
               SizedBox(height: 35),
 
-              RoundButton(title: "SUBMIT ORDER", onPressed: () {}),
+              RoundButton(title: "SUBMIT ORDER", onPressed: () {
+                context.push( SuccessScreen1() );
+              }),
             ],
           ),
         ),

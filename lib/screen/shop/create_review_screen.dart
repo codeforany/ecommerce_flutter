@@ -24,7 +24,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
     return Container(
       margin: const EdgeInsets.only(top: 160),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      constraints: BoxConstraints(maxHeight: context.heigth * 0.8),
+      constraints: BoxConstraints(maxHeight: context.height * 0.8),
       decoration: BoxDecoration(
         color: TColor.bg,
         borderRadius: BorderRadius.only(
