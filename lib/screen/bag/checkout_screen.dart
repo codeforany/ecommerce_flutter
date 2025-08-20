@@ -1,6 +1,7 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/common_widgets/round_button.dart';
+import 'package:ecommerce/screen/bag/payment_methods_screen.dart';
 import 'package:ecommerce/screen/bag/shipping_address_screen.dart';
 import 'package:ecommerce/screen/shop/success_screen_1.dart';
 import 'package:flutter/material.dart';
@@ -130,7 +131,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   SizedBox(width: 8),
 
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(PaymentMethodsScreen());
+                    },
                     child: Text(
                       "Change",
                       style: TextStyle(

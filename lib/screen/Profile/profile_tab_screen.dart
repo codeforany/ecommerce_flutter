@@ -3,6 +3,7 @@ import 'package:ecommerce/common/common_extension.dart';
 import 'package:ecommerce/screen/Profile/my_orders_screen.dart';
 import 'package:ecommerce/screen/Profile/profile_row.dart';
 import 'package:ecommerce/screen/Profile/settings_screen.dart';
+import 'package:ecommerce/screen/bag/payment_methods_screen.dart';
 import 'package:ecommerce/screen/bag/shipping_address_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +113,7 @@ class _ProfileTabScreenState extends State<ProfileTabScreen> {
             title: "Payment Methods",
             subtitle: "Visa **34",
             onPressed: () {
-              context.push(ShippingAddressScreen());
+              context.push(PaymentMethodsScreen());
             },
           ),
 
