@@ -1,5 +1,6 @@
 import 'package:ecommerce/common/color_extension.dart';
 import 'package:ecommerce/common/common_extension.dart';
+import 'package:ecommerce/screen/bag/add_card_screen.dart';
 import 'package:ecommerce/screen/bag/card_row.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: TColor.primaryText,
         onPressed: () {
-          // context.push(AddShippingAddressScreen());
+          context.push(AddCardScreen());
         },
         child: Icon(Icons.add),
       ),
